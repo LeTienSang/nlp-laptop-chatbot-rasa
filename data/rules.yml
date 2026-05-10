@@ -1,0 +1,85 @@
+version: "3.1"
+
+rules:
+
+# ================== GREETING ==================
+- rule: greet user
+  steps:
+    - intent: greet
+    - action: utter_greet
+
+# ================== GOODBYE ==================
+- rule: say goodbye
+  steps:
+    - intent: goodbye
+    - action: utter_goodbye
+
+# ================== FALLBACK ==================
+- rule: fallback
+  steps:
+    - intent: nlu_fallback
+    - action: utter_fallback
+
+# ================== FORM KÍCH HOẠT ==================
+- rule: activate recommend form
+  steps:
+    - intent: ask_laptop_recommend
+    - action: laptop_recommend_form
+    - active_loop: laptop_recommend_form
+
+# ================== FORM SUBMIT ==================
+- rule: submit recommend form
+  condition:
+    - active_loop: laptop_recommend_form
+  steps:
+    - action: laptop_recommend_form
+    - active_loop: null
+    - action: utter_recommend_result
+
+# ================== ASK CONTACT ==================
+- rule: contact info
+  steps:
+    - intent: ask_contact
+    - action: utter_ask_contact
+
+# ================== STORE INFO ==================
+- rule: store info
+  steps:
+    - intent: ask_store_info
+    - action: utter_store_info
+
+# ================== PAYMENT ==================
+- rule: payment info
+  steps:
+    - intent: ask_payment
+    - action: utter_payment
+
+# ================== PROMOTION ==================
+- rule: promotion info
+  steps:
+    - intent: ask_promotion
+    - action: utter_promotion
+
+# ================== SHIPPING ==================
+- rule: shipping info
+  steps:
+    - intent: ask_shipping
+    - action: utter_ask_shipping
+
+# ================== WARRANTY ==================
+- rule: warranty info
+  steps:
+    - intent: ask_warranty
+    - action: utter_ask_warranty
+
+# ================== AVAILABILITY ==================
+- rule: check availability
+  steps:
+    - intent: ask_availability
+    - action: utter_ask_availability
+
+# ================== BUY INTENT ==================
+- rule: handle buy intent
+  steps:
+    - intent: buy_intent
+    - action: utter_ask_buy_confirm

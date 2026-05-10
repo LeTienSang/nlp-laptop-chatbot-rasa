@@ -1,0 +1,160 @@
+version: "3.1"
+
+# ================== INTENTS ==================
+intents:
+  - greet
+  - goodbye
+  - affirm
+  - deny
+  - ask_laptop_price
+  - ask_laptop_price_range
+  - ask_laptop_specs
+  - ask_laptop_list
+  - ask_laptop_recommend
+  - compare_laptops
+  - ask_availability
+  - ask_shipping
+  - ask_payment
+  - ask_warranty
+  - ask_promotion
+  - ask_store_info
+  - ask_contact
+  - unclear_request
+  - buy_intent
+  - ask_more_info
+  - select_laptop
+  - nlu_fallback
+
+# ================== ENTITIES ==================
+entities:
+  - brand
+  - price
+  - spec_type
+  - storage
+  - usage
+  - feature
+
+# ================== SLOTS ==================
+slots:
+  brand:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: brand
+  price:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: price
+      - type: from_text
+        conditions:
+          - active_loop: laptop_recommend_form
+            requested_slot: price
+  spec_type:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: spec_type
+  usage:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: usage
+      - type: from_text
+        conditions:
+          - active_loop: laptop_recommend_form
+            requested_slot: usage
+
+# ================== ACTIONS ==================
+actions:
+  - action_recommend_laptop
+  - action_check_price
+  - action_compare_laptop
+  - action_default_fallback
+
+# ================== FORMS ==================
+forms:
+  laptop_recommend_form:
+    required_slots:
+      - price
+      - usage
+
+# ================== RESPONSES ==================
+responses:
+  utter_ask_price:
+    - text: "Bạn dự định mua laptop trong tầm giá khoảng bao nhiêu tiền ạ?"
+    
+  utter_ask_usage:
+    - text: "Nhu cầu sử dụng chính của bạn là gì (ví dụ: chơi game, văn phòng, đồ họa...)??"
+
+  utter_greet:
+    - text: "Chào bạn! Mình là trợ lý ảo của Laptop Store. Chúc bạn một ngày tốt lành! Bạn cần mình tư vấn dòng máy nào ạ?"
+
+  utter_goodbye:
+    - text: "Tạm biệt bạn! Hy vọng sớm được gặp lại bạn tại cửa hàng."
+
+  utter_ask_laptop_price:
+    - text: "Dạ, mẫu máy này hiện đang có mức giá rất cạnh tranh. Bạn muốn mình báo giá cụ thể cho dòng máy nào ạ?"
+
+  utter_ask_laptop_price_range:
+    - text: "Trong tầm giá {price} mà bạn hỏi, bên mình có khá nhiều lựa chọn tốt. Bạn đợi mình lọc danh sách nhé!"
+
+  utter_ask_laptop_list:
+    - text: "Đợi mình một chút, mình sẽ liệt kê các dòng máy đang sẵn hàng cho bạn tham khảo..."
+
+  utter_ask_shipping:
+    - text: "Bên mình miễn phí vận chuyển trong nội thành và hỗ trợ 50% phí ship COD toàn quốc bạn nhé!"
+
+  utter_ask_payment:
+    - text: "Bên mình hỗ trợ thanh toán tiền mặt, chuyển khoản, quẹt thẻ và có cả trả góp 0% qua thẻ tín dụng nữa ạ."
+
+  utter_ask_warranty:
+    - text: "Tất cả laptop tại shop đều được bảo hành chính hãng từ 12-24 tháng và hỗ trợ 1 đổi 1 trong 30 ngày đầu."
+
+  utter_ask_store_info:
+    - text: "Shop mình mở cửa từ 8h00 đến 21h00 hàng ngày. Bạn có thể ghé qua trải nghiệm máy trực tiếp ạ!"
+
+  utter_ask_contact:
+    - text: "Bạn có thể liên hệ hotline: 0123.456.789 để được hỗ trợ nhanh nhất nhé."
+
+  utter_unclear_request:
+    - text: "Dạ, để tư vấn chính xác nhất, bạn có thể cho mình biết nhu cầu chính của bạn là dùng để học tập hay chơi game không?"
+
+  utter_ask_more_info:
+    - text: "Dạ, bạn cần biết thêm về hình ảnh thực tế hay video review của máy này không ạ?"
+
+  utter_ask_more:
+    - text: "Bạn có cần biết thêm thông tin hay cấu hình chi tiết của máy này không ạ?"
+
+  utter_ask_buy_confirm:
+    - text: "Bạn có muốn tiến hành mua sản phẩm này không ạ?"
+
+  utter_default:
+    - text: "Xin lỗi, mình chưa hiểu ý bạn lắm. Bạn có thể nói rõ hơn về nhu cầu laptop của mình được không?"
+
+  utter_ask_availability:
+    - text: "Dạ, mẫu máy này hiện đang sẵn hàng tại shop ạ. Bạn có muốn ghé qua trải nghiệm trực tiếp không?"
+    - text: "Sản phẩm này vẫn còn hàng bạn nhé. Bạn cần mình giữ máy hay tư vấn thêm về cấu hình không?"
+
+  utter_fallback:
+    - text: "Xin lỗi, mình chưa hiểu ý bạn lắm. Bạn có thể nói rõ hơn hoặc thử đặt câu hỏi khác về laptop được không?"
+    - text: "Rất tiếc, mình không chắc chắn về yêu cầu này. Bạn có thể chat cụ thể hơn về dòng máy bạn đang quan tâm không?"
+
+  utter_recommend_result:
+    - text: "Dựa trên nhu cầu của bạn, đây là các gợi ý laptop phù hợp nhất cho bạn."
+
+  utter_store_info:
+    - text: "Shop mình mở cửa từ 8h00 đến 21h00 hàng ngày. Bạn có thể ghé qua trải nghiệm máy trực tiếp ạ!"
+
+  utter_payment:
+    - text: "Bên mình hỗ trợ thanh toán tiền mặt, chuyển khoản, quẹt thẻ và có cả trả góp 0% qua thẻ tín dụng nữa ạ."
+
+  utter_promotion:
+    - text: "Hiện tại bên mình có các khuyến mãi hấp dẫn. Bạn có quan tâm không ạ?"
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true

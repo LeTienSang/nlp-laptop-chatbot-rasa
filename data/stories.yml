@@ -1,0 +1,76 @@
+version: "3.1"
+
+stories:
+
+# ================== FLOW CHÀO + TƯ VẤN ==================
+- story: greet and recommend flow
+  steps:
+    - intent: greet
+    - action: utter_greet
+    - intent: ask_laptop_recommend
+    - action: laptop_recommend_form
+    - active_loop: laptop_recommend_form
+    - active_loop: null
+    - action: utter_recommend_result
+
+# ================== FLOW HỎI GIÁ ==================
+- story: ask price flow
+  steps:
+    - intent: ask_laptop_price
+    - action: action_check_price
+
+# ================== FLOW GIÁ THEO TẦM ==================
+- story: ask price range → recommend
+  steps:
+    - intent: ask_laptop_price_range
+    - action: action_recommend_laptop
+
+# ================== FLOW HỎI CẤU HÌNH ==================
+- story: ask specs
+  steps:
+    - intent: ask_laptop_specs
+    - action: utter_ask_more
+
+# ================== FLOW SO SÁNH ==================
+- story: compare laptops
+  steps:
+    - intent: compare_laptops
+    - action: action_compare_laptop
+
+# ================== FLOW MƠ HỒ → CHUYỂN SANG FORM ==================
+- story: unclear request → ask again
+  steps:
+    - intent: unclear_request
+    - action: utter_ask_usage
+
+# ================== FLOW CHỐT ĐƠN ==================
+- story: buying flow
+  steps:
+    - intent: buy_intent
+    - action: utter_ask_buy_confirm
+    - intent: affirm
+    - action: utter_payment
+
+# ================== FLOW HỎI VẬN CHUYỂN ==================
+- story: shipping info
+  steps:
+    - intent: ask_shipping
+    - action: utter_ask_shipping
+
+# ================== FLOW HỎI BẢO HÀNH ==================
+- story: warranty info
+  steps:
+    - intent: ask_warranty
+    - action: utter_ask_warranty
+
+# ================== FLOW FOLLOW-UP ==================
+- story: ask more info
+  steps:
+    - intent: ask_more_info
+    - action: utter_ask_more
+
+# ================== FLOW DANH SÁCH ==================
+- story: show laptop list
+  steps:
+    - intent: ask_laptop_list
+    - action: action_recommend_laptop

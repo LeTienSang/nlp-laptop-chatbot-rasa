@@ -1,0 +1,277 @@
+version: "3.1"
+
+nlu:
+
+# ================== GREETING ==================
+- intent: greet
+  examples: |
+    - chào shop
+    - hi shop
+    - hello
+    - shop còn online không
+    - ad ơi tư vấn giúp mình
+    - bên mình còn bán không
+
+# ================== GOODBYE ==================
+- intent: goodbye
+  examples: |
+    - bye shop
+    - tạm biệt nhé
+    - cảm ơn bạn nhiều
+    - ok mình tham khảo thêm
+    - để mình suy nghĩ thêm
+
+# ================== AFFIRM / DENY ==================
+- intent: affirm
+  examples: |
+    - ok
+    - được đó
+    - nghe hợp lý
+    - chuẩn rồi
+    - vậy cũng được
+
+- intent: deny
+  examples: |
+    - không cần đâu
+    - thôi mình không lấy
+    - chưa phù hợp
+    - không thích lắm
+
+# ================== PRICE ==================
+- intent: ask_laptop_price
+  examples: |
+    - con này bao nhiêu tiền?
+    - laptop này giá sao?
+    - [dell](brand) xps giá bao nhiêu?
+    - máy này có đắt không?
+    - cho mình xin giá con này
+
+# ================== PRICE RANGE ==================
+- intent: ask_laptop_price_range
+  examples: |
+    - có máy nào dưới [15 triệu](price) không?
+    - tầm [20 triệu](price) mua được gì?
+    - khoảng [10 đến 15 triệu](price) có máy nào ổn?
+    - laptop giá rẻ nhất bao nhiêu?
+    - có con nào khoảng [25 triệu](price) không?
+
+# ================== SPECS ==================
+- intent: ask_laptop_specs
+  examples: |
+    - máy này dùng [chip](spec_type) gì?
+    - [cpu](spec_type) con này là dòng nào?
+    - [ram](spec_type) bao nhiêu gb?
+    - có [card rời](spec_type) không shop?
+    - [vga](spec_type) là loại nào?
+    - [màn hình](spec_type) bao nhiêu inch?
+    - độ phân giải [màn hình](spec_type) là bao nhiêu?
+    - ổ cứng [ssd](storage) hay [hdd](storage)?
+    - dung lượng [ổ cứng](spec_type) bao nhiêu?
+    - [pin](spec_type) dùng được mấy tiếng?
+    - [trọng lượng](spec_type) máy bao nhiêu kg?
+    - máy này [nặng](spec_type) bao nhiêu?
+    - bàn phím có [led](spec_type) không?
+
+# ================== LISTS ==================
+- intent: ask_laptop_list
+  examples: |
+    - shop có những máy nào?
+    - gửi mình danh sách laptop
+    - hiện tại có dòng nào?
+    - có những hãng nào đang bán?
+    - show mình các mẫu laptop
+
+# ================== RECOMMEND ==================
+- intent: ask_laptop_recommend
+  examples: |
+    - tư vấn laptop cho [sinh viên](usage)
+    - mình cần máy để [lập trình](usage)
+    - laptop [gaming](usage) tầm [20 triệu](price)
+    - có máy nào cho [đồ họa](usage) không?
+    - cần laptop [văn phòng](usage) giá [15 triệu](price)
+    - máy [mỏng nhẹ](feature) cho [học tập](usage)
+
+# ================== COMPARE ==================
+- intent: compare_laptops
+  examples: |
+    - [dell](brand) với [asus](brand) cái nào tốt hơn?
+    - nên mua [hp](brand) hay [lenovo](brand)?
+    - so sánh 2 con này giúp mình
+    - [macbook](brand) với [dell](brand) xps nên chọn gì?
+    - con này hơn con kia ở điểm nào?
+
+# ================== AVAILABITILY ==================
+- intent: ask_availability
+  examples: |
+    - máy này còn hàng không?
+    - shop còn con này không?
+    - còn màu đen không?
+    - sản phẩm này hết chưa?
+    - khi nào có hàng lại?
+
+# ================== SHIPPING ==================
+- intent: ask_shipping
+  examples: |
+    - có ship không?
+    - ship về Hà Nội mất bao lâu?
+    - phí ship bao nhiêu?
+    - có giao tận nơi không?
+    - có ship cod không?
+
+# ================== PAYMENT ==================
+- intent: ask_payment
+  examples: |
+    - có trả góp không?
+    - trả góp 0% không?
+    - thanh toán như thế nào?
+    - có quẹt thẻ không?
+    - chuyển khoản được không?
+
+# ================== WARRANTY ==================
+- intent: ask_warranty
+  examples: |
+    - bảo hành bao lâu?
+    - có bảo hành chính hãng không?
+    - lỗi có đổi không?
+    - có 1 đổi 1 không?
+    - chính sách bảo hành thế nào?
+
+# ================== PROMOTION ==================
+- intent: ask_promotion
+  examples: |
+    - có khuyến mãi gì không?
+    - đang giảm giá không?
+    - có voucher không?
+    - mua máy có tặng gì không?
+    - đang sale à?
+
+# ================== STORE INFO ==================
+- intent: ask_store_info
+  examples: |
+    - shop ở đâu?
+    - địa chỉ cửa hàng
+    - mấy giờ mở cửa?
+    - có chi nhánh không?
+    - cửa hàng ở Hà Nội chỗ nào?
+
+# ================== CONTACT ==================
+- intent: ask_contact
+  examples: |
+    - cho mình xin số điện thoại
+    - hotline shop là gì?
+    - liên hệ như thế nào?
+    - có zalo không?
+    - facebook shop là gì?
+
+# ================== UNCLEAR REQUEST ==================
+- intent: unclear_request
+  examples: |
+    - máy nào ngon vậy?
+    - tư vấn giúp mình với
+    - nên mua gì nhỉ?
+    - có con nào ổn không?
+    - chọn sao cho hợp lý?
+
+# ================== BUY ==================
+- intent: buy_intent
+  examples: |
+    - mình muốn mua con này
+    - chốt đơn giúp mình
+    - lấy máy này nhé
+    - mình mua con này
+    - đặt hàng luôn
+
+# ================== MORE INFO ==================
+- intent: ask_more_info
+  examples: |
+    - còn thông tin gì nữa không?
+    - chi tiết hơn đi
+    - nói rõ hơn được không?
+    - có hình không?
+    - gửi mình link xem
+    
+# ================== SELECT ==================
+- intent: select_laptop
+  examples: |
+    - lenovo
+    - cho mình con lenovo
+    - lấy lenovo ideapad
+    - mình chọn asus
+
+# ================== SYNONYMS ==================
+- synonym: dell
+  examples: |
+    - dell xps
+    - dell latitude
+    - máy dell
+
+- synonym: laptop gaming
+  examples: |
+    - máy chơi game
+    - laptop chuyên game
+    - máy chiến game
+
+- synonym: lập trình
+  examples: |
+    - code
+    - developer
+    - dev
+    - viết phần mềm
+
+- synonym: ssd
+  examples: |
+    - ổ cứng ssd
+    - ổ ssd
+
+- synonym: cpu
+  examples: |
+    - chip
+    - vi xử lý
+    - bộ vi xử lý
+
+- synonym: vga
+  examples: |
+    - card đồ họa
+    - card rời
+    - card màn hình
+
+- synonym: pin
+  examples: |
+    - thời lượng pin
+    - dung lượng pin
+
+# ================== LOOKUP TABLES ==================
+- lookup: brand
+  examples: |
+    - dell
+    - asus
+    - hp
+    - lenovo
+    - acer
+    - msi
+    - macbook
+    - apple
+    - gigabyte
+    - razer
+
+- lookup: usage
+  examples: |
+    - sinh viên
+    - văn phòng
+    - đồ họa
+    - gaming
+    - lập trình
+    - học tập
+    - kế toán
+    - chơi game
+
+- lookup: spec_type
+  examples: |
+    - cpu
+    - ram
+    - vga
+    - màn hình
+    - pin
+    - ổ cứng
+    - bàn phím
+    - trọng lượng
