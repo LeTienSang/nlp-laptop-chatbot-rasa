@@ -141,7 +141,7 @@ class ActionRecommendLaptop(Action):
             )
             return events
 
-        msg = "🔥 Gợi ý cho bạn:\n"
+        msg = "Gợi ý cho bạn:\n"
         for lap in results:
             msg += f"- {lap['name']} (~{lap['price']:,} VND)\n"
 
@@ -176,7 +176,22 @@ class ActionCompareLaptop(Action):
     def run(self, dispatcher, tracker, domain):
 
         dispatcher.utter_message(
-            text="👉 So sánh nhanh:\n- Dell: bền, build tốt\n- ASUS: hiệu năng cao, gaming tốt\n- HP: thiết kế đẹp, văn phòng"
+            text="So sánh nhanh:\n- Dell: bền, build tốt\n- ASUS: hiệu năng cao, gaming tốt\n- HP: thiết kế đẹp, văn phòng"
+        )
+
+        return []
+
+
+# ================== ACTION: CONFIRM PURCHASE ==================
+class ActionConfirmPurchase(Action):
+
+    def name(self):
+        return "action_confirm_purchase"
+
+    def run(self, dispatcher, tracker, domain):
+
+        dispatcher.utter_message(
+            text="Cảm ơn bạn! Đơn hàng của bạn đã được tiếp nhận. Chúng tôi sẽ liên hệ với bạn trong 1-2 giờ để xác nhận chi tiết và thời gian giao hàng. Bạn có cần hỗ trợ gì thêm không?"
         )
 
         return []

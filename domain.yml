@@ -75,6 +75,7 @@ actions:
   - action_recommend_laptop
   - action_check_price
   - action_compare_laptop
+  - action_confirm_purchase
   - action_default_fallback
 
 # ================== FORMS ==================

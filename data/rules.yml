@@ -74,6 +74,20 @@ rules:
     - intent: buy_intent
     - action: utter_ask_buy_confirm
 
+# ================== AFFIRM PURCHASE ==================
+- rule: confirm purchase when user affirms
+  steps:
+    - action: utter_ask_buy_confirm
+    - intent: affirm
+    - action: action_confirm_purchase
+
+# ================== DENY PURCHASE ==================
+- rule: cancel purchase when user denies
+  steps:
+    - action: utter_ask_buy_confirm
+    - intent: deny
+    - action: utter_goodbye
+
 # ================== SHOW RECOMMENDATIONS ==================
 - rule: show recommendation list when asked
   steps:

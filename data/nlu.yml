@@ -25,10 +25,20 @@ nlu:
 - intent: affirm
   examples: |
     - ok
+    - có
     - được đó
     - nghe hợp lý
     - chuẩn rồi
     - vậy cũng được
+    - được
+    - vâng
+    - đồng ý
+    - chắc chắn
+    - ừ
+    - ừm
+    - được chứ
+    - tất nhiên
+    - tốt
 
 - intent: deny
   examples: |
@@ -36,6 +46,12 @@ nlu:
     - thôi mình không lấy
     - chưa phù hợp
     - không thích lắm
+    - không
+    - không được đâu
+    - thôi
+    - khôngừ
+    - bỏ đi
+    - tạm thời chưa
 
 # ================== PRICE ==================
 - intent: ask_laptop_price
@@ -236,6 +252,14 @@ nlu:
     - lấy máy này nhé
     - mình mua con này
     - đặt hàng luôn
+    - lấy con này đi
+    - lấy cái này
+    - mua cái này
+    - lấy cái laptop này
+    - tôi muốn chốt đơn
+    - em muốn mua con asus rog strix
+    - lấy con asus rog strix đi
+    - tôi lấy con này
 
 # ================== MORE INFO ==================
 - intent: ask_more_info

@@ -46,7 +46,17 @@ stories:
     - intent: buy_intent
     - action: utter_ask_buy_confirm
     - intent: affirm
-    - action: utter_payment
+    - action: action_confirm_purchase
+
+# ================== FLOW CHỐT ĐƠN TỪ GỢI Ý ==================
+- story: recommend then buy flow
+  steps:
+    - intent: ask_laptop_recommend
+    - action: action_recommend_laptop
+    - intent: buy_intent
+    - action: utter_ask_buy_confirm
+    - intent: affirm
+    - action: action_confirm_purchase
 
 # ================== FLOW HỎI VẬN CHUYỂN ==================
 - story: shipping info
