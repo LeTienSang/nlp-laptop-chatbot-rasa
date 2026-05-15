@@ -52,6 +52,13 @@ nlu:
     - khôngừ
     - bỏ đi
     - tạm thời chưa
+    - ko
+    - Ko
+    - k
+    - không đâu
+    - không muốn
+    - thôi nha
+    - thôi vậy
 
 # ================== PRICE ==================
 - intent: ask_laptop_price
@@ -161,6 +168,11 @@ nlu:
     - so sánh 2 con này giúp mình
     - [macbook](brand) với [dell](brand) xps nên chọn gì?
     - con này hơn con kia ở điểm nào?
+    - asus tuf gaming tốt hơn acer nitro 5 ko?
+    - [dell](brand) g15 với [msi](brand) gf63 cái nào hợp game hơn?
+    - [asus](brand) tuf gaming với [lenovo](brand) legion 5 nên lấy con nào?
+    - giữa [acer](brand) nitro 5 và [asus](brand) tuf gaming nên chọn cái nào?
+    - so sánh [msi](brand) gf63 với [dell](brand) g15
 
 # ================== AVAILABITILY ==================
 - intent: ask_availability
@@ -197,6 +209,20 @@ nlu:
     - lỗi có đổi không?
     - có 1 đổi 1 không?
     - chính sách bảo hành thế nào?
+
+# ================== EXCHANGE LAPTOP ==================
+- intent: ask_exchange_laptop
+  examples: |
+    - cho tôi đổi máy
+    - đổi sang máy khác
+    - muốn đổi máy
+    - tôi muốn đổi con khác
+    - đổi mẫu khác được không
+    - đổi laptop khác giúp mình
+    - mình muốn đổi sang con khác
+    - cho mình đổi máy này
+    - đổi sang con khác đi
+    - mình không muốn máy này nữa
 
 # ================== PROMOTION ==================
 - intent: ask_promotion
@@ -260,6 +286,10 @@ nlu:
     - em muốn mua con asus rog strix
     - lấy con asus rog strix đi
     - tôi lấy con này
+    - lấy máy này
+    - chốt mẫu này
+    - mua con này
+    - đặt con này giúp mình
 
 # ================== MORE INFO ==================
 - intent: ask_more_info
@@ -288,6 +318,17 @@ nlu:
     - cho mình con lenovo
     - lấy lenovo ideapad
     - mình chọn asus
+    - Dell G15 đi
+    - Cho tôi con Dell G15
+    - Acer Nitro 5
+    - MSI GF63
+    - ASUS TUF Gaming
+    - Lenovo Legion 5
+    - Razer Blade 14
+    - MacBook Air M1
+    - lấy Dell G15
+    - chọn Acer Nitro 5
+    - lấy con MSI GF63
 
 # ================== SYNONYMS ==================
 - synonym: dell

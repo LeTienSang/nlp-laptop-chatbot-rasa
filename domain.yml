@@ -16,6 +16,7 @@ intents:
   - ask_shipping
   - ask_payment
   - ask_warranty
+  - ask_exchange_laptop
   - ask_promotion
   - ask_store_info
   - ask_contact
@@ -69,13 +70,26 @@ slots:
         conditions:
           - active_loop: laptop_recommend_form
             requested_slot: usage
+  selected_laptop:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_text
+  awaiting_purchase_confirmation:
+    type: bool
+    influence_conversation: true
+    mappings:
+      - type: custom
 
 # ================== ACTIONS ==================
 actions:
   - action_recommend_laptop
   - action_check_price
   - action_compare_laptop
+  - action_request_purchase_confirmation
   - action_confirm_purchase
+  - action_select_laptop
+  - action_exchange_laptop
   - action_default_fallback
 
 # ================== FORMS ==================
@@ -116,6 +130,9 @@ responses:
 
   utter_ask_warranty:
     - text: "Tất cả laptop tại shop đều được bảo hành chính hãng từ 12-24 tháng và hỗ trợ 1 đổi 1 trong 30 ngày đầu."
+
+  utter_ask_exchange_laptop:
+    - text: "Được, mình sẽ đổi máy cho bạn. Bạn nhắn tên máy mới hoặc nhu cầu + ngân sách, mình sẽ gợi ý lại ngay."
 
   utter_ask_store_info:
     - text: "Shop mình mở cửa từ 8h00 đến 21h00 hàng ngày. Bạn có thể ghé qua trải nghiệm máy trực tiếp ạ!"

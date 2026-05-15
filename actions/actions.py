@@ -76,6 +76,20 @@ def infer_usage(usage_text):
     return None
 
 
+def find_laptop_matches(text):
+    if not text:
+        return []
+
+    normalized_text = text.lower()
+    matches = []
+
+    for laptop in laptops:
+        if laptop["name"].lower() in normalized_text:
+            matches.append(laptop)
+
+    return matches
+
+
 # ================== ACTION: RECOMMEND ==================
 class ActionRecommendLaptop(Action):
 
@@ -175,11 +189,58 @@ class ActionCompareLaptop(Action):
 
     def run(self, dispatcher, tracker, domain):
 
+        latest_text = tracker.latest_message.get("text", "")
+        matches = find_laptop_matches(latest_text)
+
+        if len(matches) >= 2:
+            first_laptop = matches[0]
+            second_laptop = matches[1]
+
+            first_usage = ", ".join(first_laptop["usage"])
+            second_usage = ", ".join(second_laptop["usage"])
+
+            if first_laptop["price"] <= second_laptop["price"]:
+                cheaper_laptop = first_laptop["name"]
+            else:
+                cheaper_laptop = second_laptop["name"]
+
+            dispatcher.utter_message(
+                text=(
+                    f"So sánh nhanh giữa {first_laptop['name']} và {second_laptop['name']}:\n"
+                    f"- {first_laptop['name']}: {first_usage}, giá ~{first_laptop['price']:,} VND\n"
+                    f"- {second_laptop['name']}: {second_usage}, giá ~{second_laptop['price']:,} VND\n"
+                    f"Nếu bạn ưu tiên giá mềm hơn thì có thể xem {cheaper_laptop}; còn nếu ưu tiên đúng nhu cầu cụ thể thì mình có thể lọc sâu hơn cho bạn."
+                )
+            )
+            return []
+
         dispatcher.utter_message(
             text="So sánh nhanh:\n- Dell: bền, build tốt\n- ASUS: hiệu năng cao, gaming tốt\n- HP: thiết kế đẹp, văn phòng"
         )
 
         return []
+
+
+# ================== ACTION: REQUEST PURCHASE CONFIRMATION ==================
+class ActionRequestPurchaseConfirmation(Action):
+
+    def name(self):
+        return "action_request_purchase_confirmation"
+
+    def run(self, dispatcher, tracker, domain):
+
+        selected_laptop = tracker.get_slot("selected_laptop")
+
+        if selected_laptop:
+            dispatcher.utter_message(
+                text=f"Bạn có muốn chốt mẫu {selected_laptop} này không ạ? Bạn chỉ cần nhắn 'có' hoặc 'ko'."
+            )
+        else:
+            dispatcher.utter_message(
+                text="Bạn có muốn tiến hành mua sản phẩm này không ạ?"
+            )
+
+        return [SlotSet("awaiting_purchase_confirmation", True)]
 
 
 # ================== ACTION: CONFIRM PURCHASE ==================
@@ -190,8 +251,71 @@ class ActionConfirmPurchase(Action):
 
     def run(self, dispatcher, tracker, domain):
 
+        selected_laptop = tracker.get_slot("selected_laptop")
+
+        if selected_laptop:
+            dispatcher.utter_message(
+                text=(
+                    f"Cảm ơn bạn! Mình đã ghi nhận mẫu {selected_laptop}. "
+                    "Chúng tôi sẽ liên hệ với bạn trong 1-2 giờ để xác nhận chi tiết và thời gian giao hàng. "
+                    "Bạn có cần hỗ trợ gì thêm không?"
+                )
+            )
+            return [SlotSet("awaiting_purchase_confirmation", False)]
+
         dispatcher.utter_message(
             text="Cảm ơn bạn! Đơn hàng của bạn đã được tiếp nhận. Chúng tôi sẽ liên hệ với bạn trong 1-2 giờ để xác nhận chi tiết và thời gian giao hàng. Bạn có cần hỗ trợ gì thêm không?"
         )
 
-        return []
+        return [SlotSet("awaiting_purchase_confirmation", False)]
+
+
+# ================== ACTION: SELECT LAPTOP ==================
+class ActionSelectLaptop(Action):
+
+    def name(self):
+        return "action_select_laptop"
+
+    def run(self, dispatcher, tracker, domain):
+
+        latest_text = tracker.latest_message.get("text", "")
+        matches = find_laptop_matches(latest_text)
+
+        if not matches:
+            dispatcher.utter_message(
+                text="Mình chưa nhận ra mẫu laptop cụ thể. Bạn nhắn đúng tên máy hoặc chọn từ danh sách gợi ý giúp mình nhé."
+            )
+            return []
+
+        selected_laptop = matches[0]
+        dispatcher.utter_message(
+            text=(
+                f"Mình hiểu bạn đang chọn {selected_laptop['name']} (~{selected_laptop['price']:,} VND). "
+                "Nếu muốn chốt mẫu này, bạn chỉ cần nhắn 'có'. Nếu muốn đổi mẫu khác, nhắn tên máy mới cho mình nhé."
+            )
+        )
+
+        return [
+            SlotSet("selected_laptop", selected_laptop["name"]),
+            SlotSet("awaiting_purchase_confirmation", True),
+        ]
+
+
+# ================== ACTION: CHANGE LAPTOP ==================
+class ActionExchangeLaptop(Action):
+
+    def name(self):
+        return "action_exchange_laptop"
+
+    def run(self, dispatcher, tracker, domain):
+
+        dispatcher.utter_message(
+            text="Được, mình sẽ đổi máy cho bạn. Bạn nhắn tên máy mới hoặc nhu cầu + ngân sách, mình sẽ gợi ý lại ngay."
+        )
+
+        return [
+            SlotSet("selected_laptop", None),
+            SlotSet("usage", None),
+            SlotSet("price", None),
+            SlotSet("awaiting_purchase_confirmation", False),
+        ]

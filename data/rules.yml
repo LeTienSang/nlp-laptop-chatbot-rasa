@@ -72,21 +72,35 @@ rules:
 - rule: handle buy intent
   steps:
     - intent: buy_intent
-    - action: utter_ask_buy_confirm
+    - action: action_request_purchase_confirmation
 
 # ================== AFFIRM PURCHASE ==================
 - rule: confirm purchase when user affirms
   steps:
-    - action: utter_ask_buy_confirm
     - intent: affirm
+    - slot_was_set:
+        - awaiting_purchase_confirmation: true
     - action: action_confirm_purchase
 
 # ================== DENY PURCHASE ==================
 - rule: cancel purchase when user denies
   steps:
-    - action: utter_ask_buy_confirm
     - intent: deny
-    - action: utter_goodbye
+    - slot_was_set:
+        - awaiting_purchase_confirmation: true
+    - action: action_exchange_laptop
+
+# ================== SELECT LAPTOP ==================
+- rule: select specific laptop
+  steps:
+    - intent: select_laptop
+    - action: action_select_laptop
+
+# ================== EXCHANGE LAPTOP ==================
+- rule: exchange laptop
+  steps:
+    - intent: ask_exchange_laptop
+    - action: action_exchange_laptop
 
 # ================== SHOW RECOMMENDATIONS ==================
 - rule: show recommendation list when asked

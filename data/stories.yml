@@ -44,9 +44,23 @@ stories:
 - story: buying flow
   steps:
     - intent: buy_intent
-    - action: utter_ask_buy_confirm
+    - action: action_request_purchase_confirmation
     - intent: affirm
     - action: action_confirm_purchase
+
+# ================== FLOW CHỐT ĐƠN SAU KHI CHỌN MÁY ==================
+- story: select laptop then buy flow
+  steps:
+    - intent: select_laptop
+    - action: action_select_laptop
+    - intent: affirm
+    - action: action_confirm_purchase
+
+# ================== FLOW ĐỔI MÁY ==================
+- story: exchange laptop flow
+  steps:
+    - intent: ask_exchange_laptop
+    - action: action_exchange_laptop
 
 # ================== FLOW CHỐT ĐƠN TỪ GỢI Ý ==================
 - story: recommend then buy flow
@@ -54,7 +68,7 @@ stories:
     - intent: ask_laptop_recommend
     - action: action_recommend_laptop
     - intent: buy_intent
-    - action: utter_ask_buy_confirm
+    - action: action_request_purchase_confirmation
     - intent: affirm
     - action: action_confirm_purchase
 
