@@ -22,6 +22,7 @@ intents:
   - unclear_request
   - buy_intent
   - ask_more_info
+  - ask_where_recommend
   - select_laptop
   - nlu_fallback
 
@@ -89,7 +90,7 @@ responses:
     - text: "Bạn dự định mua laptop trong tầm giá khoảng bao nhiêu tiền ạ?"
     
   utter_ask_usage:
-    - text: "Nhu cầu sử dụng chính của bạn là gì (ví dụ: chơi game, văn phòng, đồ họa...)??"
+    - text: "Nhu cầu sử dụng chính của bạn là gì (ví dụ: chơi game, văn phòng, đồ họa...)?"
 
   utter_greet:
     - text: "Chào bạn! Mình là trợ lý ảo của Laptop Store. Chúc bạn một ngày tốt lành! Bạn cần mình tư vấn dòng máy nào ạ?"
@@ -146,6 +147,9 @@ responses:
 
   utter_recommend_result:
     - text: "Dựa trên nhu cầu của bạn, đây là các gợi ý laptop phù hợp nhất cho bạn."
+
+  utter_recommend_list:
+    - text: "Mình đã lọc được một số mẫu phù hợp: 1) Acer Nitro 5 - GPU rời, phù hợp chơi game nhẹ; 2) Lenovo IdeaPad Gaming - cân bằng hiệu năng/giá; 3) MSI GF63 - tập trung hiệu năng chơi game. Bạn muốn xem chi tiết mẫu nào hoặc cần lọc thêm theo giá?"
 
   utter_store_info:
     - text: "Shop mình mở cửa từ 8h00 đến 21h00 hàng ngày. Bạn có thể ghé qua trải nghiệm máy trực tiếp ạ!"

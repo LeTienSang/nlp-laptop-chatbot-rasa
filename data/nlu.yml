@@ -9,7 +9,7 @@ nlu:
     - hi shop
     - hello
     - shop còn online không
-    - ad ơi tư vấn giúp mình
+    - ad ơi tư vấn giúp mình với
     - bên mình còn bán không
 
 # ================== GOODBYE ==================
@@ -45,6 +45,16 @@ nlu:
     - [dell](brand) xps giá bao nhiêu?
     - máy này có đắt không?
     - cho mình xin giá con này
+    - giá của mẫu này là bao nhiêu?
+    - báo giá giúp mình
+    - con này tầm bao nhiêu tiền
+    - shop đang bán con này bao nhiêu
+    - em muốn biết giá
+    - cho mình xin bảng giá
+    - giá từ bao nhiêu đến bao nhiêu
+    - có thể cho mình giá chi tiết không
+    - giá niêm yết là bao nhiêu
+    - giá khuyến mãi của máy này là gì
 
 # ================== PRICE RANGE ==================
 - intent: ask_laptop_price_range
@@ -54,6 +64,16 @@ nlu:
     - khoảng [10 đến 15 triệu](price) có máy nào ổn?
     - laptop giá rẻ nhất bao nhiêu?
     - có con nào khoảng [25 triệu](price) không?
+    - dưới [10 triệu](price)
+    - dưới [10tr](price)
+    - dưới [10 triệu đi]
+    - tầm dưới [10 triệu](price)
+    - mình cần laptop tầm [12 triệu](price)
+    - có laptop [15 triệu](price) ngon không?
+    - tầm [8 triệu](price) có máy nào chơi được không?
+    - gợi ý laptop trong khoảng [10-15 triệu](price)
+    - giới thiệu máy tầm [20-25 triệu](price)
+    - mình muốn mua máy dưới [20 triệu](price)
 
 # ================== SPECS ==================
 - intent: ask_laptop_specs
@@ -80,6 +100,16 @@ nlu:
     - hiện tại có dòng nào?
     - có những hãng nào đang bán?
     - show mình các mẫu laptop
+    - cho mình xem danh sách sản phẩm
+    - list các laptop đang bán
+    - gửi catalog các mẫu
+    - có mấy mẫu đang có sẵn?
+    - cho mình xem những mẫu nổi bật
+    - gửi tôi danh sách laptop gaming
+    - show me laptops
+    - cho mình list theo giá
+    - cho tôi danh sách máy dành cho sinh viên
+    - liệt kê các mẫu đang có
 
 # ================== RECOMMEND ==================
 - intent: ask_laptop_recommend
@@ -90,6 +120,22 @@ nlu:
     - có máy nào cho [đồ họa](usage) không?
     - cần laptop [văn phòng](usage) giá [15 triệu](price)
     - máy [mỏng nhẹ](feature) cho [học tập](usage)
+    - chơi game
+    - mình chơi game
+    - chỉ để chơi game
+    - máy để chơi game thôi
+    - chủ yếu chơi game
+    - chơi game ấy
+    - dùng để chơi game và giải trí
+    - tư vấn cho mình một con laptop chơi LOL và PUBG
+    - mình cần laptop cấu hình mạnh để chơi game
+    - có laptop tầm 15 triệu chơi được Valorant không
+    - muốn mua laptop gaming tầm 25 triệu
+    - giới thiệu vài mẫu gaming cho mình
+    - tư vấn laptop cho edit video nhẹ
+    - mình cần laptop cho livestream
+    - laptop nhẹ pin lâu cho đi học và chơi game nhẹ
+    - nhu cầu chính là chơi game và học tập
 
 # ================== COMPARE ==================
 - intent: compare_laptops
@@ -171,6 +217,16 @@ nlu:
     - nên mua gì nhỉ?
     - có con nào ổn không?
     - chọn sao cho hợp lý?
+    - mình không biết chọn máy nào
+    - bối rối không biết mua con nào
+    - cho mình gợi ý được không
+    - mình cần lời khuyên chọn laptop
+    - mình mới, cần tư vấn
+    - không rành cấu hình, tư vấn giúp
+    - mình muốn một máy dùng được lâu
+    - máy này có phù hợp với mình không
+    - gợi ý máy tốt ở tầm giá này
+    - giúp mình chọn laptop phù hợp
 
 # ================== BUY ==================
 - intent: buy_intent
@@ -189,6 +245,17 @@ nlu:
     - nói rõ hơn được không?
     - có hình không?
     - gửi mình link xem
+    - ?
+    - ??
+    - ???
+    - mình không hiểu
+    - sao vậy?
+    - cho mình xem cấu hình chi tiết
+    - có video review không?
+    - gửi mình ảnh thực tế của máy
+    - link đặt hàng có không?
+    - tôi muốn xem đánh giá chi tiết
+    - cho mình thông số kỹ thuật đầy đủ
     
 # ================== SELECT ==================
 - intent: select_laptop
@@ -265,6 +332,25 @@ nlu:
     - kế toán
     - chơi game
 
+# ================== WHERE RECOMMEND ==================
+- intent: ask_where_recommend
+  examples: |
+    - đâu
+    - ở đâu
+    - đâu rồi
+    - gợi ý đâu
+    - cho xem danh sách
+    - đưa danh sách
+    - show
+    - show me
+    - link gợi ý
+    - mình muốn xem gợi ý
+    - đưa mình danh sách máy phù hợp
+    - cho mình xem các gợi ý
+    - gửi danh sách mẫu bạn gợi ý
+    - đâu là máy bạn recommend
+    - cho mình link các mẫu
+    - cho mình xem kết quả tư vấn
 - lookup: spec_type
   examples: |
     - cpu

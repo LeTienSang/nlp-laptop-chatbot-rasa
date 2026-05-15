@@ -1,5 +1,6 @@
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
+from rasa_sdk.events import SlotSet
 import re
 
 # ================== FAKE DATABASE ==================
@@ -10,6 +11,27 @@ laptops = [
     {"name": "Acer Nitro 5", "price": 22000000, "usage": ["gaming"]},
     {"name": "ASUS TUF Gaming", "price": 25000000, "usage": ["gaming"]},
     {"name": "MacBook Air M1", "price": 23000000, "usage": ["lap trinh", "van phong"]},
+    {"name": "MSI GF63", "price": 20000000, "usage": ["gaming"]},
+    {"name": "Gigabyte G5", "price": 21000000, "usage": ["gaming"]},
+    {"name": "HP Pavilion 15", "price": 14000000, "usage": ["hoc tap", "van phong"]},
+    {"name": "Acer Swift 3", "price": 17000000, "usage": ["hoc tap", "lap trinh"]},
+    {"name": "Lenovo Legion 5", "price": 30000000, "usage": ["gaming"]},
+    {"name": "Razer Blade 14", "price": 45000000, "usage": ["gaming"]},
+    {"name": "Dell XPS 13", "price": 32000000, "usage": ["lap trinh", "do hoa"]},
+    {"name": "MacBook Pro 14", "price": 52000000, "usage": ["do hoa", "lap trinh"]},
+    {"name": "Asus ROG Strix G", "price": 28000000, "usage": ["gaming"]},
+    {"name": "HP ZBook Firefly", "price": 40000000, "usage": ["do hoa"]},
+    {"name": "Acer Aspire 5", "price": 11000000, "usage": ["hoc tap", "van phong"]},
+    {"name": "Lenovo ThinkPad T14", "price": 26000000, "usage": ["van phong", "lap trinh"]},
+    {"name": "MSI Stealth 15M", "price": 35000000, "usage": ["gaming", "lap trinh"]},
+    {"name": "HP Omen 16", "price": 27000000, "usage": ["gaming"]},
+    {"name": "Asus ZenBook 14", "price": 19000000, "usage": ["hoc tap", "lap trinh"]},
+    {"name": "Acer Predator Helios", "price": 38000000, "usage": ["gaming"]},
+    {"name": "Lenovo Yoga Slim 7", "price": 21000000, "usage": ["hoc tap", "lap trinh"]},
+    {"name": "Dell G15", "price": 24000000, "usage": ["gaming"]},
+    {"name": "Huawei MateBook D 15", "price": 16000000, "usage": ["hoc tap", "van phong"]},
+    {"name": "Microsoft Surface Laptop 4", "price": 29000000, "usage": ["hoc tap", "do hoa"]},
+    {"name": "Asus ProArt Studiobook", "price": 60000000, "usage": ["do hoa"]},
 ]
 
 # ================== HELPER ==================
@@ -22,13 +44,36 @@ def extract_price(price_text):
     if not numbers:
         return None
 
-    price = int(numbers[0])
+    if len(numbers) > 1 and ("-" in price_text or "đến" in price_text or "toi" in price_text):
+        price = int(numbers[-1])
+    else:
+        price = int(numbers[0])
 
     # nếu user nói "20 triệu"
     if "triệu" in price_text:
         return price * 1000000
 
     return price
+
+
+def infer_usage(usage_text):
+    if not usage_text:
+        return None
+
+    normalized_text = usage_text.lower()
+
+    if any(keyword in normalized_text for keyword in ["game", "gaming", "chơi", "choi", "valorant", "pubg", "lol", "cs2"]):
+        return "gaming"
+    if any(keyword in normalized_text for keyword in ["văn phòng", "van phong", "office", "kế toán", "ke toan"]):
+        return "van phong"
+    if any(keyword in normalized_text for keyword in ["lập trình", "lap trinh", "code", "developer", "dev"]):
+        return "lap trinh"
+    if any(keyword in normalized_text for keyword in ["đồ họa", "do hoa", "edit", "render", "thiết kế", "thiet ke"]):
+        return "do hoa"
+    if any(keyword in normalized_text for keyword in ["học tập", "hoc tap", "sinh viên", "sinh vien", "study"]):
+        return "hoc tap"
+
+    return None
 
 
 # ================== ACTION: RECOMMEND ==================
@@ -41,10 +86,37 @@ class ActionRecommendLaptop(Action):
             tracker: Tracker,
             domain):
 
-        price_text = tracker.get_slot("price")
-        usage = tracker.get_slot("usage")
+        latest_text = tracker.latest_message.get("text", "")
+        current_price_text = tracker.get_slot("price")
+        current_usage = tracker.get_slot("usage")
 
-        price = extract_price(price_text)
+        inferred_usage = current_usage or infer_usage(latest_text)
+        inferred_price_text = current_price_text or latest_text
+        price = extract_price(inferred_price_text)
+
+        events = []
+        if inferred_usage and not current_usage:
+            events.append(SlotSet("usage", inferred_usage))
+        if price and not current_price_text:
+            events.append(SlotSet("price", inferred_price_text))
+
+        if not inferred_usage and not price:
+            dispatcher.utter_message(
+                text="Bạn muốn máy dùng để chơi game, văn phòng hay đồ họa? Cho mình thêm mức ngân sách nữa là mình lọc ngay cho bạn nhé."
+            )
+            return events
+
+        if not inferred_usage:
+            dispatcher.utter_message(
+                text="Bạn cho mình biết nhu cầu sử dụng chính trước nhé: chơi game, văn phòng, đồ họa hay lập trình?"
+            )
+            return events
+
+        if not price:
+            dispatcher.utter_message(
+                text="Bạn dự định mua laptop trong tầm giá khoảng bao nhiêu tiền ạ?"
+            )
+            return events
 
         results = []
 
@@ -54,22 +126,27 @@ class ActionRecommendLaptop(Action):
                 continue
 
             # lọc theo nhu cầu
-            if usage:
-                if not any(u in usage.lower() for u in lap["usage"]):
+            if inferred_usage:
+                if inferred_usage not in lap["usage"]:
                     continue
 
             results.append(lap)
 
         if not results:
-            dispatcher.utter_message(text="😅 Không tìm được máy phù hợp, bạn thử tăng ngân sách hoặc đổi nhu cầu nhé.")
-            return []
+            dispatcher.utter_message(
+                text=(
+                    f"Hiện chưa có laptop phù hợp với nhu cầu '{inferred_usage}' trong tầm giá này. "
+                    "Bạn thử tăng ngân sách hoặc đổi nhu cầu một chút, mình sẽ lọc lại ngay cho bạn."
+                )
+            )
+            return events
 
         msg = "🔥 Gợi ý cho bạn:\n"
         for lap in results:
             msg += f"- {lap['name']} (~{lap['price']:,} VND)\n"
 
         dispatcher.utter_message(text=msg)
-        return []
+        return events
 
 
 # ================== ACTION: CHECK PRICE ==================

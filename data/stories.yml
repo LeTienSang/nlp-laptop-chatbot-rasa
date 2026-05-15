@@ -8,10 +8,7 @@ stories:
     - intent: greet
     - action: utter_greet
     - intent: ask_laptop_recommend
-    - action: laptop_recommend_form
-    - active_loop: laptop_recommend_form
-    - active_loop: null
-    - action: utter_recommend_result
+    - action: action_recommend_laptop
 
 # ================== FLOW HỎI GIÁ ==================
 - story: ask price flow

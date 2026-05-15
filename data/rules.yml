@@ -24,17 +24,7 @@ rules:
 - rule: activate recommend form
   steps:
     - intent: ask_laptop_recommend
-    - action: laptop_recommend_form
-    - active_loop: laptop_recommend_form
-
-# ================== FORM SUBMIT ==================
-- rule: submit recommend form
-  condition:
-    - active_loop: laptop_recommend_form
-  steps:
-    - action: laptop_recommend_form
-    - active_loop: null
-    - action: utter_recommend_result
+    - action: action_recommend_laptop
 
 # ================== ASK CONTACT ==================
 - rule: contact info
@@ -83,3 +73,15 @@ rules:
   steps:
     - intent: buy_intent
     - action: utter_ask_buy_confirm
+
+# ================== SHOW RECOMMENDATIONS ==================
+- rule: show recommendation list when asked
+  steps:
+    - intent: ask_where_recommend
+    - action: utter_recommend_list
+
+# ================== MORE INFO ==================
+- rule: more info
+  steps:
+    - intent: ask_more_info
+    - action: utter_ask_more
